@@ -26,6 +26,17 @@ class PoliController extends Controller
 
     public function submit(Request $request)
     {
+        $pasienId = Auth::id();
+        $antrianAktif = \App\Models\DaftarPoli::where('id_pasien', $pasienId)
+            ->whereDoesntHave('periksas')
+            ->exists();
+
+        if ($antrianAktif) {
+            return redirect()->back()->withErrors([
+            'msg' => 'Anda masih memiliki pendaftaran antrian aktif yang belum selesai diperiksa. Tidak dapat mendaftar dua kali.'
+        ]);
+        }
+
         $request->validate([
             'id_poli' => 'required|exists:poli,id',
             'id_jadwal' => 'required|exists:jadwal_periksa,id',

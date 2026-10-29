@@ -8,12 +8,14 @@ class Periksa extends Model
 {
     protected $table = 'periksa';
 
-    protected $fillable = [
-        'id_daftar_poli',
-        'tgl_periksa',
-        'catatan',
-        'biaya_periksa'
-    ];
+  protected $fillable = [
+    'id_daftar_poli',
+    'tgl_periksa',
+    'catatan',
+    'biaya_periksa',
+    'bukti_pembayaran',
+    'status_pembayaran',
+];
 
     public function daftarPoli()
     {

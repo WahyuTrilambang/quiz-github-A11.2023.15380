@@ -1,18 +1,25 @@
 <x-layouts.app title="Data Pasien">
 
     {{-- Header --}}
-    <div class="flex items-center justify-between mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <h2 class="text-2xl font-bold text-slate-800">
             Data Pasien
         </h2>
 
-        <a href="{{ route('pasien.create') }}" class="inline-flex items-center gap-2 px-5 py-2.5
-                  bg-primary hover:bg-primary/90
-                  text-white text-sm font-semibold
-                  rounded-xl transition">
-            <i class="fas fa-plus text-xs"></i>
-            Tambah Pasien
-        </a>
+        {{-- Group Tombol Aksi di Kanan --}}
+        <div class="flex items-center gap-3">
+            <a href="{{ route('admin.export.pasien') }}" 
+            class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-xl transition inline-flex items-center gap-2 shadow-sm">
+                <i class="fas fa-file-excel"></i>
+                Export Excel
+            </a>
+
+            <a href="{{ route('pasien.create') }}" 
+            class="px-5 py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded-xl transition inline-flex items-center gap-2 shadow-sm">
+                <i class="fas fa-plus text-xs"></i>
+                Tambah Pasien
+            </a>
+        </div>
     </div>
 
     {{-- Card --}}
