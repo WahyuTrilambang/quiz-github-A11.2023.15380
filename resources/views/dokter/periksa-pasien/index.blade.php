@@ -25,10 +25,11 @@
                     {{-- Table Head --}}
                     <thead class="bg-slate-50 text-slate-500 uppercase text-xs tracking-wider">
                         <tr>
-                            <th class="px-6 py-4">ID</th>
+                            <th class="px-6 py-4">No</th>
                             <th class="px-6 py-4">Pasien</th>
                             <th class="px-6 py-4">Keluhan</th>
-                            <th class="px-6 py-4">No Antrian</th>
+                            <th class="px-6 py-4 text-center">No Antrian</th>
+                            <th class="px-6 py-4 text-center">Status</th>
                             <th class="px-6 py-4 text-right">Aksi</th>
                         </tr>
                     </thead>
@@ -38,7 +39,7 @@
                         @forelse($daftarPasien as $daftar)
                         <tr class="border-t border-slate-100 hover:bg-slate-50 transition">
 
-                            {{-- ID --}}
+                            {{-- No --}}
                             <td class="px-6 py-4 font-medium text-slate-600">
                                 {{ $loop->iteration }}
                             </td>
@@ -54,22 +55,36 @@
                             </td>
 
                             {{-- Nomor Antrian --}}
-                            <td class="px-6 py-4 font-medium text-slate-700">
+                            <td class="px-6 py-4 text-center font-bold text-indigo-600">
                                 {{ $daftar->no_antrian }}
                             </td>
 
-                            {{-- Aksi --}}
-                            <td class="px-6 py-4 text-right">
-                                @if($daftar->periksa)
-                                    {{-- Status: Sudah Diperiksa --}}
+                            {{-- Status Periksa --}}
+                            <td class="px-6 py-4 text-center">
+                                @if($daftar->status_periksa == 'sudah_diperiksa')
                                     <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-full">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                         Sudah Diperiksa
                                     </span>
                                 @else
-                                    {{-- Button: Periksa --}}
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-100 text-amber-700 text-xs font-semibold rounded-full">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                                        Belum Diperiksa
+                                    </span>
+                                @endif
+                            </td>
+
+                            {{-- Aksi --}}
+                            <td class="px-6 py-4 text-right">
+                                @if($daftar->status_periksa == 'sudah_diperiksa')
                                     <a href="{{ route('periksa-pasien.create', $daftar->id) }}" 
-                                       class="inline-flex items-center gap-1.5 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold rounded-lg shadow-sm transition">
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition">
+                                        <i class="fas fa-edit text-xs"></i>
+                                        Edit Periksa
+                                    </a>
+                                @else
+                                    <a href="{{ route('periksa-pasien.create', $daftar->id) }}" 
+                                    class="inline-flex items-center gap-1.5 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold rounded-lg shadow-sm transition">
                                         <i class="fas fa-stethoscope text-xs"></i>
                                         Periksa
                                     </a>
@@ -79,7 +94,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5" class="text-center py-12 text-slate-400">
+                            <td colspan="6" class="text-center py-12 text-slate-400">
                                 <i class="fas fa-inbox text-3xl mb-3 block"></i>
                                 Belum ada antrian pasien untuk diperiksa
                             </td>
